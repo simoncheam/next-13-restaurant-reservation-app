@@ -1,4 +1,4 @@
-const Ratings = () => {
+const Rating = () => {
   return (
     <div className='flex items-end'>
     <div className='ratings mt-2 flex items-center'>
@@ -11,4 +11,4 @@ const Ratings = () => {
   </div>
   )
 }
-export default Ratings
+export default Rating

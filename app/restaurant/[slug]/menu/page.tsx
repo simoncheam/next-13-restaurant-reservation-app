@@ -1,23 +1,43 @@
-import Link from 'next/link';
-import Navbar from '../../../components/Navbar';
+import { PrismaClient } from '@prisma/client';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 import RestaurantNavbar from '../components/RestaurantNavbar';
-const RestaurantMenuPage = () => {
-  return (
-    <main className='bg-gray-100 min-h-screen w-screen'>
-      <main className='max-w-screen-2xl m-auto bg-white'>
-        <Navbar />
-        <Header />
 
-        <div className='flex m-auto w-2/3 justify-between items-start 0 -mt-11'>
-          <div className='bg-white w-[100%] rounded p-3 shadow'>
-            <RestaurantNavbar />
-            <Menu />
-          </div>
+
+// getting menu items for the menu page
+
+const prisma = new PrismaClient();
+
+const fetchRestaurantMenuItems = async (slug: string) => {
+
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { slug },
+    select: {
+      items: true,
+    }
+
+  });
+
+  if(!restaurant) {
+    throw new Error('No restaurant found');
+  }
+
+  return restaurant.items;
+}
+
+
+const RestaurantMenuPage = async ({params}: {params: {slug: string} }) => {
+
+const menu = await fetchRestaurantMenuItems(params.slug);
+
+
+  return (
+    <>
+        <div className='bg-white w-[100%] rounded p-3 shadow'>
+          <RestaurantNavbar slug={params.slug} />
+          <Menu menu={menu} />
         </div>
-      </main>
-    </main>
+    </>
   );
 };
 export default RestaurantMenuPage;
