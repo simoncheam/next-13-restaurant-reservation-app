@@ -15,7 +15,6 @@ const ReviewCard = ({review}:{review: Review}) => {
           <div className='ml-10 w-5/6'>
             <div className='flex items-center'>
               <Stars rating={review.rating} reviews={[]} />
-              <div className='flex mr-5'>**** STARS</div>
               <div className='flex mr-5'>rating: {review.rating}/5</div>
             </div>
             <div className='mt-5'>
