@@ -13,6 +13,7 @@ const select = {
   cuisine: true,
   location: true,
   slug: true,
+  reviews: true,
 };
 
 interface SearchParams {
@@ -67,7 +68,6 @@ const fetchRestaurantsBySearchParams = (searchParams: SearchParams) => {
 };
 
 //fetch locations
-
 const fetchLocations = async () => {
   return prisma.location.findMany();
 };
